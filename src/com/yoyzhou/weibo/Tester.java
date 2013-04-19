@@ -9,6 +9,8 @@ import java.io.IOException;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Writable;
+import org.apache.hadoop.io.WritableComparator;
+import org.apache.hadoop.io.WritableUtils;
 import org.apache.hadoop.util.StringUtils;
 
 
@@ -22,12 +24,38 @@ public class Tester {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
+		//TODO How many bytes per each built-in Writable type takes, what does their bytes sequences look like
+		//IntWritable, VLongWritable, etc. to name a few and the more important is user customized Writable class
+		//Two probable articles about this topic, length of /Customized/Writable class; and how to write 
+		//RawComparator of user Customized Writable Class.
+		
 		IntWritable int8 = new IntWritable(17);
 		LongWritable l = new LongWritable(17);
+		CoFollowedPairWritable cfp = new CoFollowedPairWritable(1000000008, 33333);
 		
-		byte[] bs = serialize(l);
-		String hex = StringUtils.byteToHexString(bs);
+		byte[] bs = serialize(cfp);
+		
+		cfp.set(100000000, 33333);
+		byte[] bs2 = serialize(cfp);
+		
+		String hex = StringUtils.byteToHexString(bs2);
 		System.out.println(hex);
+		
+		//bs = new byte[]{0x08, 0x0a};
+		cfp = (CoFollowedPairWritable)deserialize(cfp, bs);
+		long i = WritableUtils.readVLong(new DataInputStream(new ByteArrayInputStream(bs)));
+		i = WritableComparator.readVLong(bs, 0);
+		
+		i = WritableUtils.decodeVIntSize(bs[0]);
+		i = WritableComparator.readVLong(bs, 1);
+		System.out.println(i);
+		System.out.println(cfp);
+		
+		CoFollowedPairWritable.Comparator cc = new CoFollowedPairWritable.Comparator();
+		
+		i = cc.compare(bs2, 0, bs2.length, bs, 0, bs.length);
+		System.out.println(i);
+		
 	}
 	
 	public static byte[] serialize(Writable writable) throws IOException{
@@ -49,7 +77,6 @@ public class Tester {
 		
 		dataIn.close();
 		return writable;
-		
 		
 	}
 
