@@ -26,10 +26,10 @@ public class CoFollowedAnalysis {
 	/**
 	 * 
 	 * */
-	public static class CombineCoFollowedMapper extends Mapper<Object, Text, MyWritable, LongWritable>{
+	public static class CombineCoFollowedMapper extends Mapper<Object, Text, CoFollowedPairWritable, LongWritable>{
 		
 		private final static LongWritable one = new LongWritable(1);
-		private MyWritable pair = new MyWritable();
+		private CoFollowedPairWritable pair = new CoFollowedPairWritable();
 		private ArrayList<String> famousUsers = new ArrayList<String>();
 		
 		@Override
@@ -95,12 +95,12 @@ public class CoFollowedAnalysis {
 	}
 
 
-	public static class AggregateCoFollowedReducer extends Reducer<MyWritable, LongWritable, MyWritable, LongWritable>{
+	public static class AggregateCoFollowedReducer extends Reducer<CoFollowedPairWritable, LongWritable, CoFollowedPairWritable, LongWritable>{
 		
 		private LongWritable result = new LongWritable();
 		
 		@Override
-		public void reduce(MyWritable key, Iterable<LongWritable> values, Context context) throws IOException, InterruptedException{
+		public void reduce(CoFollowedPairWritable key, Iterable<LongWritable> values, Context context) throws IOException, InterruptedException{
 			int sum = 0;
 			for (LongWritable val : values){
 				sum += val.get();
@@ -135,10 +135,10 @@ public class CoFollowedAnalysis {
 		job.setCombinerClass(AggregateCoFollowedReducer.class);
 		job.setReducerClass(AggregateCoFollowedReducer.class);
 		
-		job.setMapOutputKeyClass(MyWritable.class);
+		job.setMapOutputKeyClass(CoFollowedPairWritable.class);
 	    job.setMapOutputValueClass(LongWritable.class);
 	    
-		job.setOutputKeyClass(MyWritable.class);
+		job.setOutputKeyClass(CoFollowedPairWritable.class);
 		job.setOutputValueClass(LongWritable.class);
 		
 		
