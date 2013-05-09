@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -17,13 +16,13 @@ import org.apache.hadoop.util.GenericOptionsParser;
 
 public class CalFollowedNumber {
 
-	public static class CalFollowedNumberMapper extends Mapper<NullWritable, Text, Text, IntWritable>{
+	public static class CalFollowedNumberMapper extends Mapper<Object, Text, Text, IntWritable>{
 		
 		private final static IntWritable one = new IntWritable(1);
 	
 		
 		@Override
-		public void map(NullWritable key, Text value, Context context) throws IOException, InterruptedException {
+		public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
 			
 			//note value is format as user:follow1,follow2,...,follown
 			if (value.toString().endsWith(":")) return;
