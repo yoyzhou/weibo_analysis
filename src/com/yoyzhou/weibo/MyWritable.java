@@ -19,8 +19,6 @@ public class MyWritable implements Writable{
 			this.set(new VLongWritable(), new VLongWritable());
 		}
 		
-
-		
 		public MyWritable(VLongWritable fld1, VLongWritable fld2){
 			
 			this.set(fld1, fld2);
