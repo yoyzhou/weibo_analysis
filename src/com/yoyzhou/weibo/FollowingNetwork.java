@@ -23,7 +23,6 @@ import org.apache.hadoop.util.GenericOptionsParser;
 
 /**
 	Created on April 23, 2013
-
 	@author: yoyzhou
 */
 

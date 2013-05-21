@@ -16,12 +16,11 @@ local.properties
 .settings/
 .loadpath
 *~
-results/
 dataset/
-*txt
-caches/
-
-#External tool builders
+results/
+output/
+testdata/
+# External tool builders
 .externalToolBuilders/
 
 # Locally stored "Eclipse launch configurations"

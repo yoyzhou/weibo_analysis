@@ -65,6 +65,7 @@ public class WritableBytesLengthDemo {
 		
 		MyWritableComparable.Comparator mwcc = new MyWritableComparable.Comparator();
 		int cmp = mwcc.compare(serialize(mwc1), 0, 2, serialize(mwc2), 0, 2);
+		
 		String result = "";
 		switch(cmp){
 			case 0: result = "equals"; break;
@@ -72,7 +73,6 @@ public class WritableBytesLengthDemo {
 			case -1: result = "less than";break;
 		}
 		result = "MyWritableComparable(-10033,201) " + result + " MyWritableComparable(-10033,200)";
-			
 		System.out.println(result);
 		
 		
