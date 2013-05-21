@@ -14,7 +14,7 @@ import org.apache.hadoop.io.WritableUtils;
 import org.apache.hadoop.util.StringUtils;
 
 
-public class Tester {
+public class WritableLengthExample {
 
 	
 	/**
@@ -31,7 +31,7 @@ public class Tester {
 		
 		IntWritable int8 = new IntWritable(17);
 		LongWritable l = new LongWritable(17);
-		MyWritable cfp = new MyWritable(1000000008, 33333);
+		CoFollowedPairWritable cfp = new CoFollowedPairWritable(1000000008, 33333);
 		
 		byte[] bs = serialize(cfp);
 		
@@ -42,7 +42,7 @@ public class Tester {
 		System.out.println(hex);
 		
 		//bs = new byte[]{0x08, 0x0a};
-		cfp = (MyWritable)deserialize(cfp, bs);
+		cfp = (CoFollowedPairWritable)deserialize(cfp, bs);
 		long i = WritableUtils.readVLong(new DataInputStream(new ByteArrayInputStream(bs)));
 		i = WritableComparator.readVLong(bs, 0);
 		
@@ -51,7 +51,7 @@ public class Tester {
 		System.out.println(i);
 		System.out.println(cfp);
 		
-		MyWritable.Comparator cc = new MyWritable.Comparator();
+		CoFollowedPairWritable.Comparator cc = new CoFollowedPairWritable.Comparator();
 		
 		i = cc.compare(bs2, 0, bs2.length, bs, 0, bs.length);
 		System.out.println(i);

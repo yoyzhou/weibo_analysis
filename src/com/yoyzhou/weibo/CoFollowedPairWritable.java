@@ -17,7 +17,7 @@ import org.apache.hadoop.io.WritableUtils;
  * 04/19/13		Change data type of user1 and user2 to VLongWritable to take less memory/disk spaces.
  * 
  * */
-public class CoFollowedPairWritable implements WritableComparable<MyWritable>{
+public class CoFollowedPairWritable implements WritableComparable<CoFollowedPairWritable>{
 		
 		
 		private VLongWritable user1;
@@ -80,10 +80,10 @@ public class CoFollowedPairWritable implements WritableComparable<MyWritable>{
 		/** Returns true if <code>o</code> is a CoFollowedPair with the same value. */
 		@Override
 		  public boolean equals(Object o) {
-		    if (!(o instanceof MyWritable))
+		    if (!(o instanceof CoFollowedPairWritable))
 		    	return false;
 		    
-		    MyWritable other = (MyWritable)o;
+		    CoFollowedPairWritable other = (CoFollowedPairWritable)o;
 		    return user1.equals(other.user1) && user2.equals(other.user2);
 		    
 		  }
@@ -104,7 +104,7 @@ public class CoFollowedPairWritable implements WritableComparable<MyWritable>{
 		 * otherwise compare user1 then compare user2. 
 		 * */
 		@Override
-		public int compareTo(MyWritable o) {
+		public int compareTo(CoFollowedPairWritable o) {
 			int cmp = this.user1.compareTo(o.user1);
 			if(cmp != 0){
 				return cmp;
@@ -118,7 +118,7 @@ public class CoFollowedPairWritable implements WritableComparable<MyWritable>{
 	    public static class Comparator extends WritableComparator {
 	    	
 	    	public Comparator() {
-	    		super(MyWritable.class);
+	    		super(CoFollowedPairWritable.class);
 	    	}
 	    
 	    public int compare(	byte[] b1, int s1, int l1,

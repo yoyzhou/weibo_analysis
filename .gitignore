@@ -18,6 +18,8 @@ local.properties
 *~
 dataset/
 results/
+output/
+testdata/
 # External tool builders
 .externalToolBuilders/
 
