@@ -20,6 +20,10 @@ dataset/
 results/
 output/
 testdata/
+data/
+*csv
+*txt
+
 # External tool builders
 .externalToolBuilders/
 
